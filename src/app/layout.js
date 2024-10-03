@@ -4,9 +4,9 @@ import "@/styles/globals.css";
 
 export const metadata = {
   title:
-    "Template Next.js (Canary Version), Prisma, Cloudflare R2 | Devscale ID",
+    "Habit Tracker | Proghive's Final Project",
   description:
-    "Template Project Next.js (Canary Version), Prisma, Cloudflare R2 for Devscale ID",
+    "Habit Tracker | Proghive's Final Project",
   icons: {
     icon: "/icon.svg",
   },
