@@ -52,7 +52,6 @@ export async function GET(req) {
     data: {
       username: userData.name,
       email: userData.email,
-      role: "user",
       gender: "",
       country: "",
       biodata: ""
