@@ -1,9 +1,8 @@
-export default function Dashboard() {
-    return (
-      <div>
-        <h1>Registration Successful</h1>
-        <p>Your account has been created!</p>
-      </div>
-    );
-  }
-  
+export default function Page() {
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <p>Example protected routes</p>
+    </div>
+  );
+}
