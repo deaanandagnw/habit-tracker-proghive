@@ -18,7 +18,6 @@ export async function handleRegister(formData) {
             username,
             email,
             password: hashedPassword,
-            role: "user",
             gender: "",
             country: "",
             biodata: "",
@@ -26,5 +25,4 @@ export async function handleRegister(formData) {
     });
 
     redirect("/login");
-    // console.log(newUser);
 }
