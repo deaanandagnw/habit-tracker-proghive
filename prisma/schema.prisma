@@ -11,14 +11,13 @@ datasource db {
 model User {
   id           String   @id @default(uuid())
   username     String   @unique
-  password     String
+  password     String?
   email        String   @unique
   gender       String?
   country      String?
   biodata      String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  role String?
 
   // Relations
   goals         Goal[]
