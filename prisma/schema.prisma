@@ -9,17 +9,21 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(uuid())
-  username   String   @unique
-  password   String
-  email      String   @unique
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id           String   @id @default(uuid())
+  username     String   @unique
+  password     String
+  email        String   @unique
+  gender       String?
+  country      String?
+  biodata      String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   // Relations
   goals         Goal[]
   activities    Activity[]
   dailyProgress DailyProgress[]
+  sessions      Session[]
 }
 
 model Category {
@@ -40,8 +44,8 @@ model Goal {
   updatedAt   DateTime @updatedAt
 
   // Foreign keys
-  user_id    String
-  user       User     @relation(fields: [user_id], references: [id])
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id])
 
@@ -51,13 +55,13 @@ model Goal {
 }
 
 model Activity {
-  id           String    @id @default(uuid())
-  title        String
-  description  String?
-  is_completed Boolean   @default(false)
-  completed_at DateTime?
-  created_at   DateTime  @default(now())
-  updated_at   DateTime  @updatedAt
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  isCompleted Boolean   @default(false)
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   // Foreign keys
   userId String
@@ -67,13 +71,24 @@ model Activity {
 }
 
 model DailyProgress {
-  id         String   @id @default(uuid())
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Foreign keys
-  user_id String
-  user    User   @relation(fields: [user_id], references: [id])
-  goal_id String
-  goal    Goal   @relation(fields: [goal_id], references: [id])
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  goalId String
+  goal   Goal   @relation(fields: [goalId], references: [id])
+}
+
+model Session {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  token      String   @unique
+  createdAt  DateTime @default(now())
+  expiresAt  DateTime
+
+  @@index([userId])
 }
