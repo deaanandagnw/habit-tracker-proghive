@@ -1,25 +1,32 @@
+"use client"; // Client Component
+
 import { Inter } from "next/font/google";
-const inter = Inter({ subsets: ["latin"] });
+import { useRouter } from "next/navigation"; // Use next/navigation
 import "@/styles/globals.css";
 import { Sidebar } from "@/components/layout/Sidebar";
+import { usePathname } from "next/navigation";
 
-export const metadata = {
-  title:
-    "Habit Tracker | Proghive's Final Project",
-  description:
-    "Habit Tracker | Proghive's Final Project",
-  icons: {
-    icon: "/icon.svg",
-  },
-};
+const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
+  const pathname = usePathname();
+
+  console.log(`Active page: ${pathname}`);
+
+  if (pathname === "/" || pathname === "/login" || pathname === "/register") {
+    return (
+      <html lang="en">
+        <body className={`${inter.className}`}> {children} </body>
+      </html>
+    );
+  }
+
   return (
     <html lang="en">
-      <body className={`${inter.className} flex flex-row bg-white`}>
-        <Sidebar />
-        {children}
-        </body>
+      <body className={`${inter.className} flex bg-white`}>
+        <Sidebar className="w-64" />
+        <main className="flex-1"> {children} </main>
+      </body>
     </html>
   );
 }
