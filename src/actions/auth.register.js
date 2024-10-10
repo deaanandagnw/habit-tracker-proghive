@@ -25,5 +25,4 @@ export async function handleRegister(formData) {
     });
 
     redirect("/login");
-    // console.log(newUser);
 }

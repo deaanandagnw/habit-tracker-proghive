@@ -80,6 +80,20 @@ model DailyProgress {
   user   User   @relation(fields: [userId], references: [id])
   goalId String
   goal   Goal   @relation(fields: [goalId], references: [id])
+<<<<<<< HEAD
+}
+
+model Session {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  token      String   @unique
+  createdAt  DateTime @default(now())
+  expiresAt  DateTime
+
+  @@index([userId])
+=======
+>>>>>>> 1c8f31da1913df28a21c073e2c09fae2e12c2e6e
 }
 
 model Session {
