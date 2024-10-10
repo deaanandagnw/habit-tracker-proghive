@@ -18,7 +18,6 @@ export async function handleRegister(formData) {
             username,
             email,
             password: hashedPassword,
-            role: "user",
             gender: "",
             country: "",
             biodata: "",
