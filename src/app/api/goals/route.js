@@ -2,9 +2,9 @@ import { prisma } from '@/utils/prisma';
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
-        const { id, author, description} = req.body;
+        const { title, description, categoryId } = req.body;
 
-        // Get the sessionId from cookies (use req.cookies, not Cookies from js-cookie)
+        // Get the sessionId from cookies
         const sessionId = req.cookies.sessionId;
         
         if (!sessionId) {
@@ -12,31 +12,28 @@ export default async function handler(req, res) {
         }
 
         try {
-            // Fetch the session to get userId
-            const findUser = await prisma.user.findFirst({
-                where: {
-                  email: userData.email,
-                },
-              });
+            const session = await prisma.session.findUnique({
+                where: { id: sessionId },
+            });
 
-            if (!findUser) {
-                return res.status(401).json({ message: 'Invalid session.' });
+            if (!session || !session.userId) {
+                return res.status(401).json({ message: 'Invalid session or session expired.' });
             }
 
-            const id = sessionId.userId;
-            
+            const userId = session.userId;
+
             // Validate required fields
-            if (!author || !title || !description) {
-                return res.status(400).json({ message: 'Missing required fields' });
+            if (!title || !description || !categoryId) {
+                return res.status(400).json({ message: 'Title and description are required.' });
             }
 
             // Create new goal
             const newGoal = await prisma.goal.create({
                 data: {
-                    id,
+                    userId,
                     title,
                     description,
-                    userId,
+                    categoryId
                 },
             });
 
