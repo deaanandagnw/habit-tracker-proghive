@@ -112,7 +112,7 @@ export default async function Page() {
           </button>
         </form>
       </section>
-      <section className="goal-list w-full mt-14 gap-y-3 flex flex-col">
+      <section className="goal-list w-full mt-[4.1rem] gap-y-3 flex flex-col">
         <article>
           <div>
             {lastInsertedGoal ? (
@@ -150,14 +150,17 @@ export default async function Page() {
                 <div className="w-full p-5 -mt-3 bg-primaryGreenLight rounded-lg">
                   <div className="flex items-center gap-x-3">
                     <div className="flex flex-col flex-1">
-                      <label htmlFor="title" className="text-green-800 text-sm">
+                      <label
+                        htmlFor="activity"
+                        className="text-green-800 text-sm"
+                      >
                         Activity
                       </label>
                       <input
                         required
                         type="text"
-                        id="title"
-                        name="title"
+                        id="activity"
+                        name="activity"
                         placeholder="Add activities that could support you to achieve the goal!"
                         className="p-3 py-3 text-sm border border-[#80BBBE] rounded-lg focus:outline-none focus:border-secondary mt-1"
                       />
