@@ -18,8 +18,6 @@ async function addGoal(formData) {
   const startTime = formData.get("startTime");
   const endTime = formData.get("endTime");
   const userId = session.userId;
-  console.log(userId);
-
   try {
     await prisma.goal.create({
       data: {

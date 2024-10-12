@@ -11,8 +11,6 @@ const inter = Inter({ subsets: ["latin"] });
 export default function RootLayout({ children }) {
   const pathname = usePathname();
 
-  console.log(`Active page: ${pathname}`);
-
   if (pathname === "/" || pathname === "/login" || pathname === "/register") {
     return (
       <html lang="en">

@@ -3,8 +3,6 @@ async function deleteActivity() {
   await prisma.activity.delete({
     where: { id: activityId },
   });
-
-  console.log("halo");
 }
 
 export default deleteActivity;

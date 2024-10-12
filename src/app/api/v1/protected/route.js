@@ -6,7 +6,6 @@ export async function GET() {
   const headerList = headers();
   const authorization = headerList.get("authorization");
   const sessionId = authorization.split(" ")[1];
-  // console.log(sessionId);
 
   // check session Id => SESSION BASE
   const isSessionValid = await prisma.session.findUnique({

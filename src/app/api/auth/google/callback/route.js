@@ -21,7 +21,6 @@ export async function GET(req) {
   });
 
   const userData = await res.json();
-  console.log(userData);
 
   // Check if user exists in the database
   const findUser = await prisma.user.findFirst({
@@ -54,7 +53,7 @@ export async function GET(req) {
       email: userData.email,
       gender: "",
       country: "",
-      biodata: ""
+      biodata: "",
     },
   });
 
