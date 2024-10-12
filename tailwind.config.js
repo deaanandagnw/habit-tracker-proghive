@@ -14,12 +14,15 @@ module.exports = {
       },
       colors: {
         primary: "#DDF0F3",
-        secondary:"#22616A",
-        dark: "#070707"
+        secondary: "#22616A",
+        primaryGreenDark: "#96D672",
+        primaryGreen: "#AADC8D",
+        primaryGreenLight: "#DFF2D4",
+        dark: "#070707",
       },
     },
   },
-  plugins: [require('daisyui')],
+  plugins: [require("daisyui")],
   daisyui: {
     themes: ["valentine"],
   },
