@@ -1,18 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @layer base {
-  body {
-    @apply bg-white min-h-screen;
-    /* Corrected from bg-white-600 to bg-white */
-  }
-  h1,
-  h2 {
-    @apply text-xl font-medium tracking-tight text-gray-900;
-    /* Use a valid text color */
-  }
-  button {
-    @apply w-full shadow-sm text-indigo-700 px-4 py-2 font-medium tracking-tight rounded-xl transition duration-200 ease-in-out;
-  }
+    body {
+        @apply bg-white min-h-screen;
+        /* Corrected from bg-white-600 to bg-white */
+    }
+    h1,
+    h2 {
+        @apply text-xl font-medium tracking-tight text-gray-900;
+        /* Use a valid text color */
+    }
+    button {
+        @apply w-full shadow-sm text-indigo-700 px-4 py-2 font-medium tracking-tight rounded-xl transition duration-200 ease-in-out;
+    }
 }
