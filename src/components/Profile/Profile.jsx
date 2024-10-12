@@ -1,4 +1,8 @@
-export function Profile() {
+import { prisma } from "@/utils/prisma";
+
+export async function Profile() {
+  
+  const users = await prisma.user.findFirst();
   return (
     <main>
       <div className="border-slate-500 w-[25rem] rounded-3xl px-8 py-5 bg-[#DDF0F3] flex items-center gap-6">
@@ -13,14 +17,14 @@ export function Profile() {
         </div>
         <div className="flex flex-col w-auto items-start gap-4 text-indigo-950 font-serif">
           <div>
-            <h1 className="font-serif text-2xl font-bold">Name</h1>
-            <h2 className="text-lg">📍 Country</h2>
+            <h1 className="font-serif text-2xl font-bold">{users.username}</h1>
+            <h2 className="text-lg">📍{users.country}</h2>
           </div>
 
           <ul className="text-base space-y-1">
-            <li>⌛ Age</li>
-            <li>✉️ Email</li>
-            <li>👤 Gender</li>
+            <li>⌛{users.age}</li>
+            <li>✉️ {users.email}</li>
+            <li>👤 {users.gender}</li>
           </ul>
         </div>
       </div>
