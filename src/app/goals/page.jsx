@@ -159,8 +159,8 @@ export default async function Page() {
                       <input
                         required
                         type="text"
-                        id="activity"
-                        name="activity"
+                        id="title"
+                        name="title"
                         placeholder="Add activities that could support you to achieve the goal!"
                         className="p-3 py-3 text-sm border border-[#80BBBE] rounded-lg focus:outline-none focus:border-secondary mt-1"
                       />
