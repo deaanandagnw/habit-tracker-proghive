@@ -45,21 +45,19 @@ export default async function Layout({ children }) {
     <main className="">
       <header className="text-black font-medium py-5 flex justify-between items-center border border-b border-primary border-l-0 border-r-0 border-t-0 mx-12 mt-6 mb-5">
         <div className="">
-          <div className="font-bold text-3xl ">Goals 🎯</div>
-          <p className="font-light text-sm mt-2">
-            Get them goals started, get them done.
+          <div className="font-bold text-2xl ">Activities 🎯</div>
+          <p className="font-light text-[0.8rem] ">
+            Activities Activities Activities!! Lorem ipsum dolor sit Activities.
           </p>
         </div>
 
-        <div className="flex items-center space-x-5">
-          <div className="flex gap-x-2 items-center">
-            <div className="w-8 h-8 rounded-full bg-[#AADC8D] text-black font-bold flex justify-center items-center">
-              {initialAvatar}
-            </div>
-            <div>{userName}</div>
+        <div className="flex items-center space-x-4">
+          <div className="w-8 h-8 rounded-full bg-[#AADC8D] text-black font-bold flex justify-center items-center">
+            {initialAvatar}
           </div>
+          <div>{userName}</div>
           <form action={logout}>
-            <button className="bg-red-500 text-white hover:bg-red/80 rounded-lg">
+            <button className="bg-rose-300 hover:bg-red/80 text-black">
               Logout
             </button>
           </form>

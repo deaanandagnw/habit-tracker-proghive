@@ -12,9 +12,16 @@ async function addActivity(formData) {
     throw new Error("You must be logged in to create an activity");
   }
 
+  const goals = await prisma.goal.findMany({
+    include: { category: true },
+    where: {
+      userId: session.userId,
+    },
+  });
+
   const title = formData.get("title");
   const description = formData.get("description");
-  const goalId = formData.get("goalId");
+  const goalId = goals[goals.length - 1].id;
   const userId = session.userId;
 
   try {

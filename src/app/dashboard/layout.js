@@ -43,21 +43,31 @@ export default async function Layout({ children }) {
 
   return (
     <main>
-      <header className=" text-black font-medium p-5 flex justify-between items-center shadow">
-        <div>
-        <div className="font-bold text-2xl ml-5">Dahboard</div>
-        <p className="font-light text-[0.8rem] ml-5">Summary of my progress in one page</p>
+      <header className="text-black font-medium py-5 flex justify-between items-center border border-b border-primary border-l-0 border-r-0 border-t-0 mx-12 mt-6 mb-5">
+        <div className="">
+          <div className="font-bold text-3xl ">Dashboard 📊</div>
+          <p className="font-light text-sm mt-2">
+            Summary of my progress in one page
+          </p>
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-5">
+          <div className="flex gap-x-2 items-center">
+            <div className="w-8 h-8 rounded-full bg-[#AADC8D] text-black font-bold flex justify-center items-center">
+              {initialAvatar}
+            </div>
+            <div>{userName}</div>
+          </div>
           <form action={logout}>
-            <button className="bg-rose-300 hover:bg-red/80 text-black">Logout</button>
+            <button className="bg-red-500 text-white hover:bg-red/80 rounded-lg">
+              Logout
+            </button>
           </form>
-          <div>{userName}</div>
-          <div className="w-8 h-8 rounded-full bg-[#AADC8D] text-black font-bold flex justify-center items-center">{initialAvatar}</div>
         </div>
       </header>
-      <div className="max-w-6xl m-auto py-12 ml-9">{children}</div>
+      <div className="text-black font-medium py-1 flex justify-between items-center mx-12 mt-6 mb-5">
+        {children}
+      </div>
     </main>
   );
 }
