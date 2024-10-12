@@ -17,7 +17,7 @@ export function Sidebar() {
           <Link
             href={nav.href}
             key={nav.label}
-            className="text-secondary w-[200px] rounded-2xl text-center text-base bg-[#AADC8D] p-2"
+            className="text-secondary w-[200px] rounded-full font-semibold text-sm text-center bg-[#AADC8D] p-2"
           >
             {nav.label}
           </Link>
