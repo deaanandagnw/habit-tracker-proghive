@@ -12,19 +12,17 @@ export async function handleRegister(formData) {
 
   //   AUTHORIZATION CHEKING!!
 
-  const hashedPassword = await bcrypt.hash(password, 12);
-  const newUser = await prisma.user.create({
-    data: {
-      username,
-      email,
-      password: hashedPassword,
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const newUser = await prisma.user.create({
+        data: {
+            username,
+            email,
+            password: hashedPassword,
+            gender: "",
+            country: "",
+            biodata: "",
+        },
+    });
 
-      gender: "",
-      country: "",
-      biodata: "",
-    },
-  });
-
-  redirect("/login");
-  // console.log(newUser);
+    redirect("/login");
 }
