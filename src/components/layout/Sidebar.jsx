@@ -5,7 +5,7 @@ export function Sidebar() {
   const navItems = [
     { href: "/dashboard", label: "Dashboard" },
     { href: "/goals", label: "My Goals" },
-    { href: "/settings", label: "Settings" },
+    { href: "/profile", label: "My Profile" },
   ];
   return (
     <nav className="bg-primary w-[307px] h-screen flex flex-col items-center justify-between py-8 overflow-hidden">
