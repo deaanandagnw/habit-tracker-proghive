@@ -130,7 +130,15 @@ export default async function Page() {
                 </p>
               </div>
             ) : (
-              <p>No goals found.</p>
+              <div className="flex flex-col items-center justify-center text-secondary bg-white p-6 rounded-lg">
+                <div className="text-3xl mb-3 text-[#80BBBE]">🚀</div>
+                <h3 className="text-lg font-semibold text-[#55A0AC]">
+                  No Goals Yet!
+                </h3>
+                <p className="text-sm text-secondary/70 mt-2 text-center">
+                  Looks like you haven’t added any Goals yet. Try creating one!
+                </p>
+              </div>
             )}
           </div>
         </article>
