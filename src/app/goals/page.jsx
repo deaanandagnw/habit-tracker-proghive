@@ -34,8 +34,8 @@ export default async function Page() {
   return (
     <main className="flex w-full gap-x-8">
       <section className="goal-form-input w-1/2">
-        <h1 className="text-lg">Add New Goal</h1>
-        <form action={addGoal} className="mt-3 flex flex-col gap-3">
+        {/* <h1 className="text-lg">Add New Goal</h1> */}
+        <form action={addGoal} className="flex flex-col gap-3">
           <div>
             <label htmlFor="category" className="text-[#55A0AC] text-sm">
               Category
@@ -112,7 +112,7 @@ export default async function Page() {
           </button>
         </form>
       </section>
-      <section className="goal-list w-full mt-[4.1rem] gap-y-3 flex flex-col">
+      <section className="goal-list w-full mt-[1.7rem] gap-y-3 flex flex-col">
         <article>
           <div>
             {lastInsertedGoal ? (

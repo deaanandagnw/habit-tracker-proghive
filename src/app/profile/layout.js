@@ -43,7 +43,7 @@ export default async function Layout({ children }) {
 
   return (
     <main className="">
-      <header className="text-black font-medium py-5 flex justify-between items-center border border-b border-primary border-l-0 border-r-0 border-t-0 mx-12 mt-6 mb-5">
+      <header className="text-black font-medium py-5 flex justify-between items-center border border-b border-primary border-l-0 border-r-0 border-t-0 mx-12 mt-6">
         <div className="">
           <div className="font-bold text-3xl ">My Profile 👤</div>
           <p className="font-light text-sm mt-2">Update your newest profile.</p>
@@ -63,7 +63,7 @@ export default async function Layout({ children }) {
           </form>
         </div>
       </header>
-      <div className="text-black font-medium py-1 flex justify-between items-center mx-12 mt-6 mb-5">
+      <div className="text-black font-medium py-1 flex justify-between items-center mx-12 mt-3 mb-5">
         {children}
       </div>
     </main>
