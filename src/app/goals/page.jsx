@@ -13,24 +13,30 @@ export default async function Page() {
     where: {
       userId: userId.userId,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 
-  const lastInsertedGoal = goals[goals.length - 1];
+  const lastInsertedGoal = goals.length > 0 ? goals[0] : null; // Get the most recent goal if it exists
 
   const categories = await prisma.category.findMany();
 
-  const activitiesByGoalsId = await prisma.activity.findMany({
-    where: {
-      goalId: goals.id,
-    },
-  });
+  // Fetch activities only if there is a last inserted goal
+  const activitiesByLastGoalId = lastInsertedGoal
+    ? await prisma.activity.findMany({
+        where: {
+          goalId: lastInsertedGoal.id,
+        },
+      })
+    : [];
 
   return (
     <main className="flex w-full gap-x-8">
       <section className="goal-form-input w-1/2">
         <h1 className="text-lg">Add New Goal</h1>
         <form action={addGoal} className="mt-3 flex flex-col gap-3">
-          <div className="">
+          <div>
             <label htmlFor="category" className="text-[#55A0AC] text-sm">
               Category
             </label>
@@ -39,9 +45,7 @@ export default async function Page() {
               name="category"
               className="block text-sm w-full font-medium mt-1 p-3 bg-white border border-[#80BBBE] rounded-lg"
             >
-              <option value="" disabled>
-                Select a category
-              </option>
+              <option disabled>Select a category</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.name}
@@ -54,6 +58,7 @@ export default async function Page() {
               Goal Title
             </label>
             <input
+              required
               type="text"
               placeholder="What do You want to achieve?"
               id="title"
@@ -66,6 +71,7 @@ export default async function Page() {
               Description
             </label>
             <textarea
+              required
               id="description"
               name="description"
               placeholder="Describe the goal that you want to achieve!"
@@ -78,6 +84,7 @@ export default async function Page() {
                 Start Time
               </label>
               <input
+                required
                 type="date"
                 id="startTime"
                 name="startTime"
@@ -89,6 +96,7 @@ export default async function Page() {
                 End Time
               </label>
               <input
+                required
                 type="date"
                 id="endTime"
                 name="endTime"
@@ -98,83 +106,101 @@ export default async function Page() {
           </div>
           <button
             type="submit"
-            className="bg-[#AADC8D] text-secondary py-2 px-8 font-semibold rounded-3xl w-fit mt-4"
+            className="bg-[#AADC8D] text-secondary hover:bg-primaryGreenDark text-sm py-3 px-8 font-semibold rounded-full w-full mt-4"
           >
             Submit
           </button>
         </form>
       </section>
-      <section className="goal-list w-full gap-y-3 flex flex-col">
+      <section className="goal-list w-full mt-14 gap-y-3 flex flex-col">
         <article>
-          <div className="">
-            <div
-              key={lastInsertedGoal.id}
-              className="bg-primary rounded-lg p-6 mb-4 hover:cursor-pointer hover:bg-secondary/20"
-            >
-              <h2 className="text-lg">{lastInsertedGoal.title}</h2>
-              <p className="text-sm font-normal text-secondary/70 mb-1">
-                {lastInsertedGoal.description}
-              </p>
-              <p className="text-sm font-normal text-secondary/70">
-                Start: {new Date(lastInsertedGoal.startTime).toLocaleString()} |
-                End: {new Date(lastInsertedGoal.endTime).toLocaleString()}
-              </p>
-            </div>
+          <div>
+            {lastInsertedGoal ? (
+              <div
+                key={lastInsertedGoal.id}
+                className="bg-primary rounded-lg p-6 mb-4 hover:cursor-pointer hover:bg-secondary/20"
+              >
+                <h2 className="text-lg">{lastInsertedGoal.title}</h2>
+                <p className="text-sm font-normal text-secondary/70 mb-1">
+                  {lastInsertedGoal.description}
+                </p>
+                <p className="text-sm font-normal text-secondary/70">
+                  Start: {new Date(lastInsertedGoal.startTime).toLocaleString()}{" "}
+                  | End: {new Date(lastInsertedGoal.endTime).toLocaleString()}
+                </p>
+              </div>
+            ) : (
+              <p>No goals found.</p>
+            )}
           </div>
         </article>
         <article>
           <div>
-            {/* <p className="text-lg mb-3">Activity</p> */}
-            <form action={addActivity}>
-              <input
-                hidden
-                type="text"
-                id="goalId"
-                name="goalId"
-                placeholder="Add activities that could support you to achieve the goal!"
-                className="p-3 py-3 text-sm border border-[#80BBBE] rounded-lg focus:outline-none focus:border-secondary mt-1"
-              />
-              <div className="w-full p-5 -mt-3 bg-primaryGreenLight rounded-lg">
-                <div className="flex items-center gap-x-3">
-                  <div className="flex flex-col flex-1">
-                    <label htmlFor="title" className="text-green-800 text-sm">
-                      Activity Title
-                    </label>
-                    <input
-                      type="text"
-                      id="title"
-                      name="title"
-                      placeholder="Add activities that could support you to achieve the goal!"
-                      className="p-3 py-3 text-sm border border-[#80BBBE] rounded-lg focus:outline-none focus:border-secondary mt-1"
-                    />
-                  </div>
-                  <div className="w-fit self-end pb-0.5">
-                    <button
-                      type="submit"
-                      className="bg-[#AADC8D] hover:bg-primaryGreenDark text-sm text-secondary py-3 px-8 font-semibold rounded-3xl w-fit"
-                    >
-                      Add Activity
-                    </button>
-                  </div>
-                </div>
-                <div className="mt-3">
-                  {activitiesByGoalsId.map((activity) => (
-                    <div
-                      key={activity.id}
-                      className="flex items-center justify-between bg-[#FFFFFF] rounded-lg p-4 capitalize text-sm my-3"
-                    >
-                      <div className="">{activity.title}</div>
-
-                      {/* <DeleteButton /> */}
-                      {/* <DeleteButton activityId={activity.id} /> */}
-                      <div className="text-red-700 flex items-center gap-x-2 border hover:bg-red-500 hover:cursor-pointer hover:border-white hover:text-white px-3 py-2 rounded-lg text-xs">
-                        <GoTrash className="text-lg" /> Delete
-                      </div>
+            {lastInsertedGoal && (
+              <form action={addActivity}>
+                <input
+                  required
+                  hidden
+                  type="text"
+                  id="goalId"
+                  name="goalId"
+                  readOnly
+                  value={lastInsertedGoal.id}
+                />
+                <div className="w-full p-5 -mt-3 bg-primaryGreenLight rounded-lg">
+                  <div className="flex items-center gap-x-3">
+                    <div className="flex flex-col flex-1">
+                      <label htmlFor="title" className="text-green-800 text-sm">
+                        Activity
+                      </label>
+                      <input
+                        required
+                        type="text"
+                        id="title"
+                        name="title"
+                        placeholder="Add activities that could support you to achieve the goal!"
+                        className="p-3 py-3 text-sm border border-[#80BBBE] rounded-lg focus:outline-none focus:border-secondary mt-1"
+                      />
                     </div>
-                  ))}
+                    <div className="w-fit self-end pb-0.5">
+                      <button
+                        type="submit"
+                        className="bg-[#AADC8D] hover:bg-primaryGreenDark text-sm text-secondary py-3 px-8 font-semibold rounded-3xl w-fit"
+                      >
+                        Add Activity
+                      </button>
+                    </div>
+                  </div>
+                  <div className="mt-3">
+                    {activitiesByLastGoalId.length > 0 ? (
+                      activitiesByLastGoalId.map((activity) => (
+                        <div
+                          key={activity.id}
+                          className="flex items-center justify-between bg-[#FFFFFF] rounded-lg p-4 capitalize text-sm my-3"
+                        >
+                          <div className="">{activity.title}</div>
+                          <div className="text-red-700 flex items-center gap-x-2 border hover:bg-red-500 hover:cursor-pointer hover:border-white hover:text-white px-3 py-2 rounded-lg text-xs">
+                            <GoTrash className="text-lg" /> Delete
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="flex flex-col items-center justify-center text-secondary bg-white p-6 rounded-lg mt-3">
+                        <div className="text-3xl mb-3 text-[#80BBBE]">🚀</div>
+                        <h3 className="text-lg font-semibold text-[#55A0AC]">
+                          No Activities Yet!
+                        </h3>
+                        <p className="text-sm text-secondary/70 mt-2 text-center">
+                          Looks like you haven’t added any activities for this
+                          goal yet. Kickstart your journey by creating an
+                          activity that will help you reach your goal!
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </form>
+              </form>
+            )}
           </div>
         </article>
       </section>
