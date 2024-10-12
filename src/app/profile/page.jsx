@@ -24,11 +24,11 @@ export default function profilePage() {
   // const email = formData.get("email");
 
   return (
-    <main className="h-screen w-full grid grid-cols-5  bg-[#DDF0F3] ">
-      <section className=" w-full min-h-full col-span-2 bg-white  pt-10 pb-20 grid grid-rows-2 ">
+    <main className="flex gap-7">
+      <section className="min-h-full col-span-2 bg-white">
         <Profile />
       </section>
-      <section className="col-span-3 flex justify-center items-center bg-white pt-20 pb-20">
+      <section className="flex justify-center items-center bg-white ">
         <EditProfile />
       </section>
     </main>
