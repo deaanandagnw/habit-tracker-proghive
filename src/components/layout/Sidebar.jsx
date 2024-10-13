@@ -8,8 +8,8 @@ export function Sidebar() {
     { href: "/profile", label: "Profile" },
   ];
   return (
-    <nav className="bg-primary w-[307px] h-screen flex flex-col items-center justify-between py-8 overflow-hidden">
-      <div className="flex flex-col items-center justify-center gap-5 px-8 mt-5">
+    <nav className="bg-primary w-[270px] h-screen px-10 flex flex-col items-center justify-between py-8 overflow-hidden">
+      <div className="flex flex-col w-full items-center justify-center gap-5 mt-5">
         <div className="logo">
           <Image src="/image/logo.png" alt="logo" width={55} height={55} />
         </div>
@@ -18,7 +18,7 @@ export function Sidebar() {
           <Link
             href={nav.href}
             key={nav.label}
-            className="text-secondary w-[200px] rounded-full font-semibold text-sm text-center bg-[#AADC8D] p-2"
+            className="bg-[#AADC8D] hover:bg-primaryGreenDark text-sm text-secondary py-3 px-8 font-semibold rounded-3xl w-full text-center"
           >
             {nav.label}
           </Link>

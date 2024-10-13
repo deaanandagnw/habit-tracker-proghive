@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import { prisma } from '@/utils/prisma';
+import { NextResponse } from "next/server";
+import { prisma } from "@/utils/prisma";
 import { cookies } from "next/headers";
 
 export async function GET(req) {
@@ -8,7 +8,10 @@ export async function GET(req) {
     const sessionId = cookieStore.get("sessionId")?.value;
 
     if (!sessionId) {
-      return NextResponse.json({ error: "User not authenticated" }, { status: 401 });
+      return NextResponse.json(
+        { error: "User not authenticated" },
+        { status: 401 }
+      );
     }
 
     // Ambil userId dari session yang valid
@@ -28,17 +31,14 @@ export async function GET(req) {
       where: {
         userId: userId,
       },
-      select: {
-        title: true,
-        description: true,
-        startTime: true,
-        endTime: true,
-      },
     });
 
-    return NextResponse.json({ goals }); 
+    return NextResponse.json({ goals });
   } catch (error) {
     console.error("Error fetching goals:", error);
-    return NextResponse.json({ error: "Failed to fetch goals" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch goals" },
+      { status: 500 }
+    );
   }
 }
