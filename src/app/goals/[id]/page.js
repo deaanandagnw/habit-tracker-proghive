@@ -57,8 +57,8 @@ export default function GoalDetailsPage({ params }) {
         <div className="flex gap-6">
           <div className="gap-x-6">
             <div className="h-fit">
-              <p className="text-xl font-bold mb-4">Today</p>
-              <p className="-mt-2 text-secondary/70">
+              <p className="text-xl font-bold mb-4 mt-1">Today</p>
+              <p className="-mt-3 text-secondary/70">
                 {new Date(selectedDate).toDateString()}
               </p>
               <div className="w-full mt-3">

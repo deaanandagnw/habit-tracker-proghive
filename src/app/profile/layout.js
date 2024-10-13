@@ -6,38 +6,28 @@ export default async function Layout({ children }) {
   const cookieStore = cookies();
   const sessionId = cookieStore.get("sessionId")?.value;
 
-  // Check if sessionId exists in the cookie
   if (!sessionId) {
     return redirect("/login");
   }
 
-  // Query the session from the database
   const isSessionValid = await prisma.session.findFirst({
     where: { id: sessionId },
     include: { user: true },
   });
 
-  // Redirect if the session is not valid or user data is missing
   if (!isSessionValid || !isSessionValid.user) {
     return redirect("/login");
   }
 
-  // Safely access user's name and generate an avatar
   const userName = isSessionValid.user.username || "User";
   const initialAvatar = userName.charAt(0);
 
   async function logout() {
     "use server";
-
-    // Delete the session from the database
     await prisma.session.delete({
       where: { id: sessionId },
     });
-
-    // Delete session cookie
     cookies().delete("sessionId");
-
-    // Redirect to the homepage
     redirect("/");
   }
 
@@ -48,7 +38,6 @@ export default async function Layout({ children }) {
           <div className="font-bold text-3xl ">My Profile 👤</div>
           <p className="font-light text-sm mt-2">Update your newest profile.</p>
         </div>
-
         <div className="flex items-center space-x-5">
           <div className="flex gap-x-2 items-center">
             <div className="w-8 h-8 rounded-full bg-[#AADC8D] text-black font-bold flex justify-center items-center">
@@ -57,7 +46,7 @@ export default async function Layout({ children }) {
             <div>{userName}</div>
           </div>
           <form action={logout}>
-            <button className="bg-red-500 text-white hover:bg-red/80 rounded-lg">
+            <button className="bg-red-500 text-white hover:bg-red-400 rounded-lg px-3 py-1">
               Logout
             </button>
           </form>
