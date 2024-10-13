@@ -1,28 +1,40 @@
 "use server";
 
+import { cookies } from "next/headers";
 import { prisma } from "@/utils/prisma";
 import { revalidatePath } from "next/cache";
 
 async function addActivity(formData) {
-  // Get the session
-  const session = await prisma.session.findFirst();
+  const cookieStore = cookies();
+  const sessionId = cookieStore.get("sessionId")?.value;
 
-  // Check if the user is authenticated
-  if (!session || !session.userId) {
-    throw new Error("You must be logged in to create an activity");
+  // Check if sessionId exists in the cookie
+  if (!sessionId) {
+    return redirect("/login");
+  }
+
+  // Query the session from the database
+  const isSessionValid = await prisma.session.findFirst({
+    where: { id: sessionId },
+    include: { user: true },
+  });
+
+  // Redirect if the session is not valid or user data is missing
+  if (!isSessionValid || !isSessionValid.user) {
+    return redirect("/login");
   }
 
   const goals = await prisma.goal.findMany({
     include: { category: true },
     where: {
-      userId: session.userId,
+      userId: isSessionValid.user.id,
     },
   });
 
   const title = formData.get("title");
   const description = formData.get("description");
   const goalId = goals[goals.length - 1].id;
-  const userId = session.userId;
+  const userId = isSessionValid.user.id;
 
   try {
     await prisma.activity.create({
