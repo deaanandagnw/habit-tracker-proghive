@@ -1,12 +1,38 @@
 import { prisma } from "@/utils/prisma";
+import { cookies } from "next/headers";
 import { editProfile } from "@/actions/profile/editProfile";
 
-export function EditProfile() {
+export async function EditProfile() {
+  const cookieStore = cookies();
+  const sessionId = cookieStore.get("sessionId")?.value;
+
+  if (!sessionId) {
+    return redirect("/login");
+  }
+
+  const isSessionValid = await prisma.session.findFirst({
+    where: { id: sessionId },
+    include: { user: true },
+  });
+
+  if (!isSessionValid || !isSessionValid.user) {
+    return redirect("/login");
+  }
+
+  const {
+    username: userName,
+    email,
+    age,
+    gender,
+    country,
+    biodata,
+  } = isSessionValid.user;
+
   return (
     <main>
       <section>
         <form action={editProfile}>
-          <div className="h-[100%] m-auto pt-15 border-slate-500 rounded-3xl p-8 bg-[#DDF0F3]">
+          <div className="h-[100%] w-full m-auto pt-15 border-slate-500 rounded-3xl p-8 bg-[#DDF0F3]">
             <div className="max-w-[600px] space-y-4 mx-auto">
               <div className="flex flex-row items-center pb-5">
                 <label className="text-indigo-950 text-2xl font-semibold">
@@ -32,6 +58,8 @@ export function EditProfile() {
                 <label className="text-base">Email</label>
                 <input
                   name="email"
+                  value={email}
+                  readOnly
                   placeholder="Email"
                   className="border border-slate-200 rounded-xl p-2 w-full"
                 />
