@@ -16,6 +16,7 @@ model User {
   gender       String?
   country      String?
   biodata      String?
+  birthDate    DateTime?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
