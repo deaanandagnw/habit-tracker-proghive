@@ -1,18 +1,20 @@
 "use client";
 import { useEffect, useState } from "react";
 
-export function GoalsByUser({ userId }) {
+export function GoalsByUser() {
   const [goals, setGoals] = useState([]);
 
   useEffect(() => {
     const fetchGoalsByUser = async () => {
       try {
-        const response = await fetch(`/api/goals/goals-by-user?userId=${userId}`);
+        const response = await fetch(`/api/goals/goals-by-user`);
         const data = await response.json();
         console.log('Data dari server:', data); 
 
         if (data.goals) {
           setGoals(data.goals);
+        } else {
+          console.error("Error fetching goals:", data.error);
         }
       } catch (error) {
         console.error("Error fetching goals by user:", error);
@@ -20,7 +22,7 @@ export function GoalsByUser({ userId }) {
     };
 
     fetchGoalsByUser();
-  }, [userId]);
+  }, []); 
 
   return (
     <div className="w-full bg-white shadow-md p-5 rounded-xl">
@@ -29,7 +31,7 @@ export function GoalsByUser({ userId }) {
       {goals.length > 0 ? (
         <ul>
           {goals.map((goal, index) => (
-            <li key={index} className="my-4 shadow-md">
+            <li key={index} className="my-4 shadow-md p-3">
               <h4 className="text-xl font-bold">{goal.title}</h4>
               <p className="text-sm text-gray-600">{goal.description || "No description"}</p>
               <p className="text-sm text-gray-600">

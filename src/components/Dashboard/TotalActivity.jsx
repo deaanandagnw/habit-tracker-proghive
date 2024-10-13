@@ -1,22 +1,26 @@
 "use client";
 import { useEffect, useState } from "react";
 
-export function TotalActivity({userId}) {
+export function TotalActivity() {
   const [totalActivity, setTotalActivity] = useState(null);
 
   useEffect(() => {
     const fetchActivity = async () => {
       try {
-        const response = await fetch(`/api/activity/total-activity?userId=${userId}`);
+        const response = await fetch(`/api/activity/total-activity`);
         const data = await response.json();
-        setTotalActivity(data.totalActivity);
+
+        if (response.ok) {
+          setTotalActivity(data.totalActivity);
+        } else {
+          console.error("Failed to fetch total activity:", data.error);
+        }
       } catch (error) {
         console.error("Error fetching total activity:", error);
       }
     };
-
     fetchActivity();
-  }, [userId]);
+  }, []);
 
   return (
     <div className="w-[250px] h-[150px] bg-white shadow-md p-5 rounded-xl">
