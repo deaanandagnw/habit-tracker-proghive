@@ -13,6 +13,7 @@ export function Sidebar() {
         <div className="logo">
           <Image src="/image/logo.png" alt="logo" width={55} height={55} />
         </div>
+        <h1 className="font-bold text-secondary text-2xl">Get It</h1>
         {navItems.map((nav) => (
           <Link
             href={nav.href}
@@ -25,11 +26,11 @@ export function Sidebar() {
       </div>
       <div>
         <Image
-          src="/image/background-sidebar.svg"
+          src="/image/background-sidebar.png"
           alt="background sidebar"
           width={200}
           height={150}
-          className="w-full h-auto object-contain"
+          className="w-[20rem] h-auto object-cover"
         />
       </div>
     </nav>
