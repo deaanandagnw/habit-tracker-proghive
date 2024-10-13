@@ -4,6 +4,12 @@ import { TotalCategory } from "@/components/Dashboard/TotalCategory";
 import { GoalsByUser } from "@/components/Dashboard/GoalsByUser";
 
 export default function Page() {
+  const today = new Date().toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
   return (
     <main className="flex w-full gap-3 flex-col">
       <p className="text-xl font-bold">Today</p>
