@@ -11,11 +11,12 @@ datasource db {
 model User {
   id           String   @id @default(uuid())
   username     String   @unique
-  password     String
+  password     String?
   email        String   @unique
   gender       String?
   country      String?
   biodata      String?
+  birthDate    DateTime?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
@@ -40,6 +41,8 @@ model Goal {
   id          String   @id @default(uuid())
   title       String
   description String?
+  startTime   DateTime
+  endTime     DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -68,6 +71,9 @@ model Activity {
   user   User   @relation(fields: [userId], references: [id])
   goalId String
   goal   Goal   @relation(fields: [goalId], references: [id])
+
+  // Relations
+  logs ActivityLog[]
 }
 
 model DailyProgress {
@@ -91,4 +97,19 @@ model Session {
   expiresAt  DateTime
 
   @@index([userId])
+}
+
+// New model to track activity completion for each day
+model ActivityLog {
+  id          String   @id @default(uuid())
+  date        DateTime
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Foreign keys
+  activityId String
+  activity   Activity @relation(fields: [activityId], references: [id])
+
+  @@index([activityId, date])
 }
