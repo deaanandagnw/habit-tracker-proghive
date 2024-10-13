@@ -4,8 +4,8 @@ import Link from "next/link";
 export function Sidebar() {
   const navItems = [
     { href: "/dashboard", label: "Dashboard" },
-    { href: "/goals", label: "My Goals" },
-    { href: "/profile", label: "My Profile" },
+    { href: "/goals/add", label: "Goals" },
+    { href: "/profile", label: "Profile" },
   ];
   return (
     <nav className="bg-primary w-[307px] h-screen flex flex-col items-center justify-between py-8 overflow-hidden">

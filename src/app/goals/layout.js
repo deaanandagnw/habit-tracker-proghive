@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { prisma } from "@/utils/prisma";
 import { redirect } from "next/navigation";
+import AddGoal from "./page";
 
 export default async function Layout({ children }) {
   const cookieStore = cookies();
@@ -65,7 +66,7 @@ export default async function Layout({ children }) {
           </form>
         </div>
       </header>
-      <div className="text-black font-medium flex justify-between items-center mx-12 mt-3 mb-5">
+      <div className="text-black font-medium  justify-between items-center mx-12 mt-3 mb-5">
         {children}
       </div>
     </main>

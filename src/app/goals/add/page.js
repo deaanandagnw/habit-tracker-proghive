@@ -1,9 +1,7 @@
 import addActivity from "@/actions/activity/addActivity";
-import deleteActivity from "@/actions/activity/deleteActivity";
 import addGoal from "@/actions/goal/addGoal";
 import { prisma } from "@/utils/prisma";
 import { GoTrash } from "react-icons/go";
-import DeleteButton from "../goals/components/DeleteButton";
 import Link from "next/link";
 
 export default async function Page({ userId }) {
@@ -33,12 +31,10 @@ export default async function Page({ userId }) {
       })
     : [];
 
-  // console.log("west", lastInsertedGoal.id);
-
   return (
     <main className="flex w-full gap-x-8">
-      <Link href={`/goals/add`}>Add</Link>
-      {/* <section className="goal-form-input w-1/2">
+      <section className="goal-form-input w-1/2">
+        {/* <h1 className="text-lg">Add New Goal</h1> */}
         <form action={addGoal} className="flex flex-col gap-3">
           <div>
             <label htmlFor="category" className="text-[#55A0AC] text-sm">
@@ -121,20 +117,35 @@ export default async function Page({ userId }) {
           <div>
             {lastInsertedGoal ? (
               <Link href={`/goals/${lastInsertedGoal.id}`}>
+                {/* // <Link href={`/dashboard`}> */}
                 <div
                   key={lastInsertedGoal.id}
-                  className="bg-primary rounded-lg p-6 mb-4 hover:cursor-pointer hover:bg-secondary/20"
+                  className="bg-primary rounded-lg p-6 w-full hover:cursor-pointer"
                 >
-                  <h2 className="text-lg">{lastInsertedGoal.title}</h2>
-                  <p className="text-sm font-normal text-secondary/70 mb-1">
+                  <h2 className="text-lg font-semibold mb-4 w-[80%]">
+                    {lastInsertedGoal.title}
+                  </h2>
+                  <p className="bg-white shadow-sm font-normal text-secondary/70 rounded-lg p-3 my-2">
                     {lastInsertedGoal.description}
                   </p>
-                  <p className="text-sm font-normal text-secondary/70">
-                    Start:{" "}
-                    {new Date(lastInsertedGoal.startTime).toLocaleDateString()}{" "}
-                    | End:{" "}
-                    {new Date(lastInsertedGoal.endTime).toLocaleDateString()}
-                  </p>
+                  <div>
+                    <div className="flex flex-col md:flex-row md:justify-between mt-4 bg-secondary/10 p-3 rounded-md">
+                      <div className="flex items-center mb-2 md:mb-0">
+                        <p className=" text-xs font-medium text-secondary">
+                          <span className="font-semibold">Start:</span>{" "}
+                          {new Date(
+                            lastInsertedGoal.startTime
+                          ).toLocaleString()}
+                        </p>
+                      </div>
+                      <div className="flex items-center">
+                        <p className=" text-xs font-medium text-secondary">
+                          <span className="font-semibold">End:</span>{" "}
+                          {new Date(lastInsertedGoal.endTime).toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </Link>
             ) : (
@@ -163,7 +174,7 @@ export default async function Page({ userId }) {
                   readOnly
                   value={lastInsertedGoal.id}
                 />
-                <div className="w-full p-5 -mt-3 bg-primaryGreenLight rounded-lg">
+                <div className="w-full p-5 mt-3 bg-primaryGreenLight rounded-lg">
                   <div className="flex items-center gap-x-3">
                     <div className="flex flex-col flex-1">
                       <label
@@ -198,9 +209,9 @@ export default async function Page({ userId }) {
                           className="flex items-center justify-between bg-[#FFFFFF] rounded-lg p-4 capitalize text-sm my-3"
                         >
                           <div className="">{activity.title}</div>
-                          <div className="text-red-700 flex items-center gap-x-2 border hover:bg-red-500 hover:cursor-pointer hover:border-white hover:text-white px-3 py-2 rounded-lg text-xs">
+                          {/* <div className="text-red-700 flex items-center gap-x-2 border hover:bg-red-500 hover:cursor-pointer hover:border-white hover:text-white px-3 py-2 rounded-lg text-xs">
                             <GoTrash className="text-lg" /> Delete
-                          </div>
+                          </div> */}
                         </div>
                       ))
                     ) : (
@@ -222,7 +233,7 @@ export default async function Page({ userId }) {
             )}
           </div>
         </article>
-      </section> */}
+      </section>
     </main>
   );
 }
