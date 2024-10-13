@@ -1,52 +1,51 @@
 "use server";
 
 import { prisma } from "@/utils/prisma";
+import bcrypt from "bcrypt";
+import { cookies } from "next/headers";
 
+export async function editProfile(formData) {
+  const cookieStore = cookies();
+  const sessionId = cookieStore.get("sessionId")?.value;
 
-async function editProfile(formData) {
-  // Get the session
-  const session = await prisma.session.findFirst();
-
-  // Check if the user is authenticated
-  if (!session || !session.userId) {
-    throw new Error("You must be logged in");
+  // Check if sessionId exists in the cookie
+  if (!sessionId) {
+    return redirect("/login");
   }
 
-  // const name = formData.get("name");
+  // Query the session from the database
+  const isSessionValid = await prisma.session.findFirst({
+    where: { id: sessionId },
+    include: { user: true },
+  });
+
+  // Redirect if the session is not valid or user data is missing
+  if (!isSessionValid || !isSessionValid.user) {
+    return redirect("/login");
+  }
+
   const username = formData.get("username");
   const email = formData.get("email");
   const password = formData.get("password");
   const gender = formData.get("gender");
   const country = formData.get("country");
+    const biodata = formData.get("biodata");
 
-const hashedPassword = await bcrypt.hash(password, 12);
+  console.log(username, email, password, gender, country, biodata);
 
-  const updateUser = await prisma.user.update({
+  const hashedPassword = await bcrypt.hash(password, 12);
+
+  const user = await prisma.user.update({
+    where: { id: isSessionValid.user.id },
     data: {
       username,
       email,
       password: hashedPassword,
       gender,
       country,
+      biodata,
     },
   });
-  console.log(updateUser);
-  //   try {
-  //     await prisma.user.update({
-  //       data: {
-  //         username,
-  //         email,
-  //         password,
-  //         gender,
-  //         country,
-  //       },
-  //     });
-
-  //     revalidatePath("/profile");
-  //   } catch (error) {
-  //     console.error("Failed to edit profile:", error);
-  //     throw new Error("Failed to edit profile. Please try again.");
-  //   }
+  console.log(user);
 }
 
-export default editProfile;

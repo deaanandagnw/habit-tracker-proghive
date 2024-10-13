@@ -1,8 +1,53 @@
+"use server"
+
 import { prisma } from "@/utils/prisma";
+import { cookies } from "next/headers";
 
 export async function Profile() {
-  
-  const users = await prisma.user.findFirst();
+  const cookieStore = cookies();
+  const sessionId = cookieStore.get("sessionId")?.value;
+
+  // Check if sessionId exists in the cookie
+  if (!sessionId) {
+    return redirect("/login");
+  }
+
+  // Query the session from the database
+  const isSessionValid = await prisma.session.findFirst({
+    where: { id: sessionId },
+    include: { user: true },
+  });
+
+  // Redirect if the session is not valid or user data is missing
+  if (!isSessionValid || !isSessionValid.user) {
+    return redirect("/login");
+  }
+
+  // Safely access user's profile
+  const userName = isSessionValid.user.username || "User";
+  const email = isSessionValid.user.email || "";
+  const age = isSessionValid.user.age || "";
+  const gender = isSessionValid.user.gender || "";
+  const country = isSessionValid.user.country || "";
+    const biodata = isSessionValid.user.biodata || "";
+
+  async function logout() {
+    "use server";
+
+    // Delete the session from the database
+    await prisma.session.delete({
+      where: { id: sessionId },
+    });
+
+    // Delete session cookie
+    cookies().delete("sessionId");
+
+    // Redirect to the homepage
+    redirect("/");
+
+
+  }
+
   return (
     <main>
       <div className="border-slate-500 w-[25rem] rounded-3xl px-8 py-5 bg-[#DDF0F3] flex items-center gap-6">
@@ -17,20 +62,20 @@ export async function Profile() {
         </div>
         <div className="flex flex-col w-auto items-start gap-4 text-indigo-950 font-serif">
           <div>
-            <h1 className="font-serif text-2xl font-bold">{users.username}</h1>
-            <h2 className="text-lg">📍{users.country}</h2>
+            <h1 className="font-serif text-2xl font-bold">{userName}</h1>
+            <h2 className="text-lg">📍{country}</h2>
           </div>
 
           <ul className="text-base space-y-1">
-            <li>⌛{users.age}</li>
-            <li>✉️ {users.email}</li>
-            <li>👤 {users.gender}</li>
+            <li>⌛{age}</li>
+            <li>✉️ {email}</li>
+            <li>👤 {gender}</li>
           </ul>
         </div>
       </div>
       <div className="row-span-1 py-6 w-full mt-4 border-slate-500 rounded-xl bg-[#DDF0F3]">
         <div className="text-center m-6 text-lg font-sans text-indigo-950">
-          <p>About Me</p>
+          <p>{biodata}</p>
         </div>
       </div>
     </main>

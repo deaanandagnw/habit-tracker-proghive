@@ -1,19 +1,11 @@
-"use server";
+import { prisma } from "@/utils/prisma";
+import { editProfile } from "@/actions/profile/editProfile";
 
-import prisma from "@/utils/prisma";
-import bcrypt from "bcrypt";
-import editProfile from "@/actions/profile/editProfile";
-
-export async function EditProfile() {
+export function EditProfile() {
   return (
     <main>
       <section>
-        <form action="editProfile">
-          <input name="email" placeholder="Email" />
-          <input name="password" placeholder="Password" />
-          <input name="gender" placeholder="Gender" />
-          <input name="country" placeholder="Country" />
-
+        <form action={editProfile}>
           <div className="h-[100%] m-auto flex-1 pt-15 border-slate-500 rounded-3xl p-8 bg-[#DDF0F3]">
             <div className="max-w-[600px] space-y-4 mx-auto">
               <div className="flex flex-row items-center pb-5">
@@ -23,10 +15,10 @@ export async function EditProfile() {
               </div>
               <div className="flex gap-4">
                 <div className="flex flex-col gap-1 w-full md:w-1/2">
-                  <label className="text-base">First Name</label>
+                  <label className="text-base">Full Name</label>
                   <input
                     name="username"
-                    placeholder="Username"
+                    placeholder="Full Name"
                     className="border border-blue-200 rounded-xl p-2 w-full"
                   />
                 </div>
@@ -90,13 +82,19 @@ export async function EditProfile() {
                 </select> */}
               </div>
 
-              {/* <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1">
                 <label className="text-base">About Me</label>
-                <textarea className="border border-slate-200 rounded-xl p-2 w-full" />
-              </div> */}
+                <textarea
+                  name="biodata"
+                  className="border border-slate-200 rounded-xl p-2 w-full"
+                />
+              </div>
 
               <div className="flex justify-end">
-                <button className="border border-slate-200 rounded-xl p-3 hover:bg-green-400 transition-colors">
+                <button
+                  type="submit"
+                  className="border border-slate-200 rounded-xl p-3 hover:bg-green-400 transition-colors"
+                >
                   Save
                 </button>
               </div>
