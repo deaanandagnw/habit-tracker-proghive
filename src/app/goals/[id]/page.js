@@ -55,7 +55,7 @@ export default function GoalDetailsPage({ params }) {
         </div>
       ) : (
         <div className="flex gap-6">
-          <div className="gap-x-6">
+          <div className="w-[40rem]">
             <div className="h-fit">
               <p className="text-xl font-bold mb-4 mt-1">Today</p>
               <p className="-mt-3 text-secondary/70">
@@ -110,7 +110,7 @@ export default function GoalDetailsPage({ params }) {
               )}
             </div>
           </div>
-          <div className="bg-primaryGreenLight flex-1 mt-[8.4rem] rounded-lg p-6 pt-4">
+          <div className="w-2/3 bg-primaryGreenLight flex-1 mt-[8.4rem] rounded-lg p-6 pt-4">
             <div className="p-2 rounded-lg w-full">
               <h2 className="text-lg font-semibold mb-4">Related Activities</h2>
               {activities.length > 0 ? (
@@ -118,13 +118,13 @@ export default function GoalDetailsPage({ params }) {
                   {activities.map((activity) => (
                     <li
                       key={activity.id}
-                      className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm"
+                      className="flex items-center hover:bg-emerald-600/10  gap-3 p-3 bg-white rounded-lg shadow-sm"
                     >
                       <input
                         type="checkbox"
                         checked={activity.isCompleted}
                         onChange={() => handleActivityToggle(activity.id)}
-                        className="form-checkbox h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-0"
+                        className="form-checkbox hover:cursor-pointer h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-0"
                       />
                       <span className="text-sm text-gray-700">
                         {activity.title}

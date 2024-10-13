@@ -8,10 +8,10 @@ import { Profile } from "@/components/Profile/Profile";
 export default function profilePage() {
   return (
     <main className="flex gap-7">
-      <section className="min-h-full col-span-2 bg-white">
+      <section className="min-h-full flex-1 col-span-2 bg-white">
         <Profile />
       </section>
-      <section className="flex justify-center items-center bg-white ">
+      <section className="flex justify-start  items-center bg-white ">
         <EditProfile />
       </section>
     </main>
